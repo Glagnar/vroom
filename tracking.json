@@ -1,0 +1,94 @@
+[{
+        "id": "urn:ngsi-ld:Vehicle:Personal:" & $substringAfter(topic, "owntracks/user/"),
+        "type": "Vehicle",
+        "vehicleType": {
+            "value": "motorcycle"
+        },
+        "category": {
+            "value": ["private"]
+        },
+        "dateObserved": {
+            "type": "DateTime",
+            "value": $fromMillis(tst * 1000)
+        },
+        "speed": {
+            "value": vel > -1 ? vel : -1,
+            "metadata": {
+                "timestamp": {
+                    "type": "DateTime",
+                    "value": $fromMillis(tst * 1000)
+                }
+            }
+        },
+        "heading": {
+            "value": cog > -1 ? cog : -1,
+            "metadata": {
+                "timestamp": {
+                    "type": "DateTime",
+                    "value": $fromMillis(tst * 1000)
+                }
+            }
+        },
+        "atmosphericPressure": {
+            "value": p > 0 ? p * 10 : 1,
+            "metadata": {
+                "timestamp": {
+                    "type": "DateTime",
+                    "value": $fromMillis(tst * 1000)
+                }
+            }
+        },
+        "location": {
+            "type": "geo:json",
+            "value": {
+                "type": "Point",
+                "coordinates": [lat, lon, alt]
+            },
+            "metadata": {
+                "timestamp": {
+                    "type": "DateTime",
+                    "value": $fromMillis(tst * 1000)
+                },
+                "accuracy": {
+                    "type": "Number",
+                    "value": acc
+                }
+            }
+        },
+        "refDevice": {
+            "type": "Text",
+            "value": "urn:ngsi-ld:Device:" & $substringAfter(topic, "owntracks/user/")
+        }
+    },
+    {
+        "id": "urn:ngsi-ld:Device:" & $substringAfter(topic, "owntracks/user/"),
+        "type": "Device",
+        "dateObserved": {
+            "type": "DateTime",
+            "value": $fromMillis(tst * 1000)
+        },
+        "category": {
+            "value": ["sensor"]
+        },
+        "batteryLevel": {
+            "type": "Number",
+            "value": batt > -1 ? $number($formatNumber(batt / 100, "1.11")) : 0,
+            "metadata": {
+                "timestamp": {
+                    "type": "DateTime",
+                    "value": $fromMillis(tst * 1000)
+                }
+            }
+        },
+        "deviceState": {
+            "type": "Text",
+            "value": bs & ":" & conn
+        },
+        "controlledProperty": {
+            "type": "Text",
+            "value": [
+                "location"
+            ]
+        }
+    }
+]
