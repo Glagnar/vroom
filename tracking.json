@@ -42,7 +42,7 @@
             "type": "geo:json",
             "value": {
                 "type": "Point",
-                "coordinates": [lat, lon, alt]
+                "coordinates": [lat, lon]
             },
             "metadata": {
                 "timestamp": {
